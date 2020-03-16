@@ -1,0 +1,6 @@
+{
+  "watch": ["src"],
+  "ext": "ts,graphql",
+  "ignore": ["src/**/*.spec.ts"],
+  "exec": "npm run lint  && ts-node --files ./src/index.ts"
+}

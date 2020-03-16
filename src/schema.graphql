@@ -1,0 +1,25 @@
+# Data types
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  password : String!
+  phoneNumber: Int!
+}
+# type error
+type Error {
+  path: String!
+  message: String!
+}
+
+# Query types
+type Query {
+  hello(name: String): String!
+  welcome(name: String): String!
+  
+}
+
+# Mutation type
+type Mutation {
+  register(firstName:String!, email:String!, password:String!):[Error]
+}
