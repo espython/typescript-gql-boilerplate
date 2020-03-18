@@ -1,10 +1,11 @@
 import { Redis } from "ioredis";
+import { Response } from "express";
 
 export interface MutationMap {
   [key: string]: (
     parent: any,
     args: any,
-    context: { redis: Redis; url: string },
+    context: { redis: Redis; url: string; response: Response },
     info: any
   ) => any;
 }

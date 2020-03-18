@@ -1,7 +1,7 @@
 # Data types
 type User {
   id: ID!
-  name: String!
+  firstName: String!
   email: String!
   password : String!
   phoneNumber: Int!
@@ -16,6 +16,7 @@ type Error {
 type Query {
   hello(name: String): String!
   welcome(name: String): String!
+  login(email:String,password:String): String!
   
 }
 

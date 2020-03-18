@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import * as yup from "yup";
 
 import { MutationMap } from "../../types/graphql-util";
@@ -33,7 +34,7 @@ const Mutations: MutationMap = {
   register: async (
     _,
     args: GQL.IRegisterOnMutationArguments,
-    { redis, url }
+    { redis, url, response }
   ) => {
     try {
       await validationSchema.validate(args, { abortEarly: false });
@@ -67,6 +68,16 @@ const Mutations: MutationMap = {
       email,
       await createConfirmationEmailLink(url, user.id, redis)
     );
+    // initiate token
+    const token = jwt.sign(
+      { userId: user.id },
+      process.env.APP_SECRET as string
+    );
+    // set token in the cookie
+    response.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 365
+    });
     return null;
   }
 };

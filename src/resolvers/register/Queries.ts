@@ -3,7 +3,7 @@ import { QueryMap } from "../../types/graphql-util";
 /**
  * graphql queries definitions
  */
-const Queries: QueryMap = {
+const RegisterQueries: QueryMap = {
   hello: (_, { name }): string => {
     return `Hello ${name || "World"}`;
   },
@@ -12,4 +12,4 @@ const Queries: QueryMap = {
   }
 };
 
-export default Queries;
+export default RegisterQueries;

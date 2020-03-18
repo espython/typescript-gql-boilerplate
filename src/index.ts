@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import "dotenv/config";
 import { GraphQLServer } from "graphql-yoga";
 import { createConnection } from "typeorm";
 import cookieParser from "cookie-parser";
@@ -10,6 +11,7 @@ import Redis from "ioredis";
 import RegisterQueries from "./resolvers/register/Queries";
 import RegisterMutations from "./resolvers/register/Mutations";
 import { User } from "./entity/User";
+import LoginQueries from "./resolvers/login/Queries";
 
 // ... or using `require()`
 // const { GraphQLServer } = require('graphql-yoga')
@@ -17,7 +19,7 @@ import { User } from "./entity/User";
 const typeDefs = `./src/schema.graphql`;
 
 const resolvers = {
-  Query: RegisterQueries,
+  Query: { ...RegisterQueries, ...LoginQueries },
   Mutation: RegisterMutations
 };
 
@@ -47,9 +49,11 @@ const redis = new Redis();
 const server = new GraphQLServer({
   typeDefs,
   resolvers,
-  context: ({ request }): object => ({
+  context: ({ request, response }): object => ({
     redis,
-    url: request.protocol + "://" + request.get("host")
+    url: request.protocol + "://" + request.get("host"),
+    response,
+    request
   })
 });
 // using coockie parser as a middleware
@@ -71,6 +75,3 @@ connectDb()
     });
   })
   .catch(error => console.log(error));
-
-  APP_SECRET=JFDJFHJJFKJFJBSGWTEUNC.318,NCN*76W
-SPARKPOST_API_KEY=908d10376a158a73dd7abbd6bd0833c8caadcb52
