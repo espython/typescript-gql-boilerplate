@@ -11,6 +11,10 @@ type Error {
   path: String!
   message: String!
 }
+# type success message
+type SuccessMessage {
+  message:String!
+}
 
 # Query types
 type Query {
@@ -23,4 +27,5 @@ type Query {
 # Mutation type
 type Mutation {
   register(firstName:String!, email:String!, password:String!):[Error]
+  logout:SuccessMessage!
 }

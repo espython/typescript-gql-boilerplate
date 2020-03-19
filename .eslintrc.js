@@ -22,7 +22,7 @@ module.exports = {
   ],
   rules: {
     "prefer-const": "warn",
-    "@typescript-eslint/no-unused-vars": ["error",{"args":"after-used"}],
+    "@typescript-eslint/no-unused-vars": ["error",{"args":"none"}],
     "@typescript-eslint/interface-name-prefix": "off"
   }
 };

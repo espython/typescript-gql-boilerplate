@@ -4,23 +4,19 @@ import { GraphQLServer } from "graphql-yoga";
 import { createConnection } from "typeorm";
 import cookieParser from "cookie-parser";
 import Redis from "ioredis";
-// import { makeExecutableSchema } from "graphql-tools";
-// import { merge } from "lodash";
 
-// import utils from "./utils/utils";
+import { addTokenToReqObj } from "./middlewares";
 import RegisterQueries from "./resolvers/register/Queries";
 import RegisterMutations from "./resolvers/register/Mutations";
+import LogoutMutations from "./resolvers/logout/Mutation";
 import { User } from "./entity/User";
 import LoginQueries from "./resolvers/login/Queries";
-
-// ... or using `require()`
-// const { GraphQLServer } = require('graphql-yoga')
 
 const typeDefs = `./src/schema.graphql`;
 
 const resolvers = {
   Query: { ...RegisterQueries, ...LoginQueries },
-  Mutation: RegisterMutations
+  Mutation: { ...RegisterMutations, ...LogoutMutations }
 };
 
 const connectDb = async (retries = 5) => {
@@ -40,11 +36,6 @@ const connectDb = async (retries = 5) => {
   }
 };
 
-// merge our graphql schemas and resolvers
-// const schema = makeExecutableSchema({
-//   typeDefs: typeDefs,
-//   resolvers: resolvers
-// });
 const redis = new Redis();
 const server = new GraphQLServer({
   typeDefs,
@@ -58,6 +49,8 @@ const server = new GraphQLServer({
 });
 // using coockie parser as a middleware
 server.express.use(cookieParser());
+// Add  token to the request Object
+server.express.use(addTokenToReqObj);
 server.express.get("/confirm/:id", async (req, res) => {
   const { id } = req.params;
   const userId = await redis.get(id);
