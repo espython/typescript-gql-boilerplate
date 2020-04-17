@@ -42,7 +42,7 @@ const Mutations: MutationMap = {
       return formatYupError(err);
     }
     // Check if Email is already exist
-    const { email, password, firstName } = args;
+    const { email, password, name } = args;
     const userAlreadyExist = await User.findOne({
       where: { email },
       select: ["id"]
@@ -58,7 +58,7 @@ const Mutations: MutationMap = {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = User.create({
-      firstName,
+      name,
       email,
       password: hashedPassword
     });

@@ -7,7 +7,10 @@ export class User extends BaseEntity {
   id: string;
 
   @Column("varchar", { length: 255 })
-  firstName: string;
+  name: string;
+
+  @Column("text", { nullable: true })
+  facebookId: string | null;
 
   // @Column("text")
   // lastName: string;
@@ -15,14 +18,15 @@ export class User extends BaseEntity {
   // @Column()
   // age: number;
 
-  @Column("varchar", { length: 255 })
-  email: string;
+  @Column("varchar", { length: 255, nullable: true })
+  email: string | null;
 
   // @Column()
   // phoneNumber: number;
 
-  @Column("text")
-  password: string;
+  @Column("text", { nullable: true })
+  password: string | null;
+
   @Column("boolean", { default: false })
   confirmed: boolean;
 }

@@ -22,6 +22,12 @@ module.exports = {
   ],
   rules: {
     "prefer-const": "warn",
+    "@typescript-eslint/no-misused-promises":[
+      "error",
+      {
+        "checksVoidReturn": false
+      }
+    ],
     "@typescript-eslint/no-unused-vars": ["error",{"args":"none"}],
     "@typescript-eslint/interface-name-prefix": "off"
   }

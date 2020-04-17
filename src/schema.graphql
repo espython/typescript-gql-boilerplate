@@ -1,9 +1,9 @@
 # Data types
 type User {
   id: ID!
-  firstName: String!
+  name: String!
   email: String!
-  password : String!
+  password: String!
   phoneNumber: Int!
 }
 # type error
@@ -13,19 +13,20 @@ type Error {
 }
 # type success message
 type SuccessMessage {
-  message:String!
+  message: String!
 }
 
 # Query types
 type Query {
   hello(name: String): String!
   welcome(name: String): String!
-  login(email:String,password:String): String!
-  
+  user: User
+  currentUser: User
 }
 
 # Mutation type
 type Mutation {
-  register(firstName:String!, email:String!, password:String!):[Error]
-  logout:SuccessMessage!
+  register(name: String!, email: String!, password: String!): [Error]
+  login(email: String, password: String): User!
+  logout: SuccessMessage!
 }

@@ -21,10 +21,11 @@ declare namespace GQL {
   }
 
   interface IQuery {
-    __typename: "Query";
+    __typename: 'Query';
     hello: string;
     welcome: string;
-    login: string;
+    user: IUser | null;
+    currentUser: IUser | null;
   }
 
   interface IHelloOnQueryArguments {
@@ -35,41 +36,42 @@ declare namespace GQL {
     name?: string | null;
   }
 
-  interface ILoginOnQueryArguments {
-    email?: string | null;
-    password?: string | null;
+  interface IUser {
+    __typename: 'User';
+    id: string;
+    name: string;
+    email: string;
+    password: string;
+    phoneNumber: number;
   }
 
   interface IMutation {
-    __typename: "Mutation";
+    __typename: 'Mutation';
     register: Array<IError | null> | null;
+    login: IUser;
     logout: ISuccessMessage;
   }
 
   interface IRegisterOnMutationArguments {
-    firstName: string;
+    name: string;
     email: string;
     password: string;
   }
 
+  interface ILoginOnMutationArguments {
+    email?: string | null;
+    password?: string | null;
+  }
+
   interface IError {
-    __typename: "Error";
+    __typename: 'Error';
     path: string;
     message: string;
   }
 
   interface ISuccessMessage {
-    __typename: "SuccessMessage";
+    __typename: 'SuccessMessage';
     message: string;
-  }
-
-  interface IUser {
-    __typename: "User";
-    id: string;
-    firstName: string;
-    email: string;
-    password: string;
-    phoneNumber: number;
   }
 }
 
